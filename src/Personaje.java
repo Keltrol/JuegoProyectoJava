@@ -25,7 +25,7 @@ public class Personaje {
     }
     public boolean defensas() {
         defensas --;
-       return defensas > 0;
+        return defensas > 0;
 
     }
 
@@ -39,7 +39,6 @@ public class Personaje {
         }
 
     }
-
 
     public boolean estaVivo() {
         return vida > 0;

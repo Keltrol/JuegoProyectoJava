@@ -5,7 +5,7 @@ public class Main {
         Juego juego = new Juego();
 
         juego.establecerNombre();
-        juego.iniciar();
+        juego.combate();
 
     }
 }

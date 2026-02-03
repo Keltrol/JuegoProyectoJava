@@ -6,14 +6,16 @@ public class Juego {
     private Enemigo enemigo;
     private final Scanner sc = new Scanner(System.in);
 
+    private String name;
+    private String enemy;
 
     public void establecerNombre() {
         System.out.println("¿Como te quieres llamar?");
-        String name = sc.next();
+        name = sc.next();
         System.out.println("Un placer " + name);
 
         System.out.println("¿Como quieres que se llame tu enemigo?");
-        String enemy = sc.next();
+        enemy = sc.next();
         System.out.println("Me gusta el nombre " + enemy);
 
         jugador = new Jugador(name);
@@ -21,7 +23,7 @@ public class Juego {
         enemigo = new Enemigo(enemy);
     }
 
-    public void iniciar() {
+    public void combate() {
 
         System.out.println("⚔️ COMIENZA EL COMBATE ⚔️");
 
@@ -38,9 +40,22 @@ public class Juego {
 
         if (jugador.estaVivo()) {
             System.out.println("🎉 Has ganado!");
+            System.out.println("¿Quieres jugar contra un enemigo mas dificl?");
+            System.out.println("""
+                1.- Si
+                2.- No
+                """);
+            int opt = sc.nextInt();
+            if (opt == 1) {
+                enemigo = new Enemigo(enemy);
+                jugador = new Jugador(name);
+                combate();
+
+            }
         } else {
             System.out.println("💀 Has perdido...");
         }
+
     }
 
     private void turnoJugador() {
