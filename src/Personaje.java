@@ -24,6 +24,7 @@ public class Personaje {
 
     }
     public boolean defensas() {
+        defensas --;
        return defensas > 0;
 
     }
