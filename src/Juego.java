@@ -7,25 +7,34 @@ public class Juego {
     private final Scanner sc = new Scanner(System.in);
 
     private String name;
-    private String enemy;
+    private int nivel = 1;
 
     public void establecerNombre() {
         System.out.println("¿Como te quieres llamar?");
         name = sc.next();
         System.out.println("Un placer " + name);
 
-        System.out.println("¿Como quieres que se llame tu enemigo?");
-        enemy = sc.next();
-        System.out.println("Me gusta el nombre " + enemy);
-
         jugador = new Jugador(name);
+        crearEnemigo();
+    }
 
-        enemigo = new Enemigo(enemy);
+    private void crearEnemigo() {
+        if (nivel == 1) {
+            enemigo = new EnemigoDebil();
+        } else if (nivel == 2) {
+            enemigo = new EnemigoFacil();
+        } else if (nivel == 3) {
+            enemigo = new EnemigoMedio();
+        } else if (nivel == 4) {
+            enemigo = new EnemigoFuerte();
+        } else if (nivel == 5) {
+            enemigo = new EnemigoFinal();
+        }
     }
 
     public void combate() {
-
         System.out.println("⚔️ COMIENZA EL COMBATE ⚔️");
+        System.out.println("Te enfrentas a: " + enemigo.nombre);
 
         while (jugador.estaVivo() && enemigo.estaVivo()) {
 
@@ -40,22 +49,30 @@ public class Juego {
 
         if (jugador.estaVivo()) {
             System.out.println("🎉 Has ganado!");
-            System.out.println("¿Quieres jugar contra un enemigo mas dificl?");
-            System.out.println("""
+
+            if (nivel == 5) {
+                System.out.println("Genial acabaste el juego");
+            } else {
+                nivel++;
+                System.out.println("¿Quieres luchar contra el siguiente enemigo?");
+                System.out.println("""
                 1.- Si
                 2.- No
                 """);
-            int opt = sc.nextInt();
-            if (opt == 1) {
-                enemigo = new Enemigo(enemy);
-                jugador = new Jugador(name);
-                combate();
 
+                int opt = sc.nextInt();
+
+                if (opt == 1) {
+                    crearEnemigo();
+                    jugador = new Jugador(name);  // reiniciamos stats
+                    combate();
+                }
             }
+
+
         } else {
             System.out.println("💀 Has perdido...");
         }
-
     }
 
     private void turnoJugador() {
@@ -71,15 +88,18 @@ public class Juego {
             jugador.atacar(enemigo);
         } else if (opcion == 2) {
             defendido = jugador.defensas();
-        } else {
+        } else if (opcion == 3) {
             jugador.curaciones(jugador);
+        } else {
+            System.out.println("Opción no válida");
         }
     }
 
     private void turnoEnemigo() {
         System.out.println("\nTurno del enemigo...");
+
         if (defendido) {
-            System.out.println("El enemigo fallo");
+            System.out.println("El enemigo falló el ataque");
             defendido = false;
         } else {
             enemigo.atacar(jugador);

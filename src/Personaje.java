@@ -24,15 +24,20 @@ public class Personaje {
 
     }
     public boolean defensas() {
-        defensas --;
-        return defensas > 0;
-
+        if (defensas > 0) {
+            defensas--;
+            System.out.println("Este turno y el siguiente no recibiras daño");
+            return true;
+        }
+        System.out.println("No quedan defensas");
+        return false;
     }
+
 
     public void curaciones(Personaje jugador) {
         if (curaciones > 0) {
-            jugador.vida += 20;
-            System.out.println("Curando 20 puntos de vida");
+            jugador.vida += 50;
+            System.out.println("Curando 40 puntos de vida");
             curaciones--;
         } else {
             System.out.println("No quedan curaciones");
